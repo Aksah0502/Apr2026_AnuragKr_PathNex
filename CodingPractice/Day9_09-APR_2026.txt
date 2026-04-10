@@ -1,0 +1,94 @@
+1. Amazon Inspector
+Amazon Inspector scans AWS workloads for vulnerabilities and misconfigurations. It continuously monitors EC2 and container images, providing risk assessments and remediation suggestions. 
+It strengthens security posture by integrating with AWS security services and automating threat detection.
+Steps:
+Go to Inspector → Enable service
+Select resources (EC2/ECR)
+Configure scan rules
+Run assessment
+Review findings in dashboard
+
+2. AWS Systems Manager
+AWS Systems Manager centralizes management of cloud and on-prem servers. 
+It supports automation, patching, configuration management, and secure access. It improves operational efficiency and visibility while reducing manual administrative tasks.
+Steps:
+Open Systems Manager
+Ensure instances have IAM role
+Use Session Manager / Run Command
+Apply patch baselines
+Monitor compliance
+3. Amazon RDS
+Amazon RDS is a managed relational database service supporting multiple engines. 
+It automates backups, scaling, and maintenance, allowing users to focus on applications instead of infrastructure.
+Steps:
+Go to RDS → Create database
+Choose engine (MySQL/PostgreSQL)
+Configure instance size
+Set credentials
+Launch and connect via endpoint
+
+4. Amazon Aurora
+Aurora is a high-performance managed database compatible with MySQL/PostgreSQL. 
+It provides better scalability, reliability, and automatic replication across zones.
+Steps:
+Go to RDS → Select Aurora
+Choose engine version
+Configure cluster settings
+Launch database
+Connect using endpoint
+
+5. Amazon DynamoDB
+DynamoDB is a fully managed NoSQL database offering fast and scalable performance. 
+It supports key-value and document data models, ideal for real-time applications.
+Steps:
+Go to DynamoDB → Create table
+Define primary key
+Configure capacity mode
+Create table
+Add/read items via console/API
+
+6. AWS DMS
+AWS DMS enables secure database migration with minimal downtime. 
+It supports various database engines and continuous data replication.
+Steps:
+Open DMS → Create replication instance
+Define source and target DB
+Create migration task
+Start migration
+Monitor progress
+
+7. AWS Batch
+AWS Batch runs large-scale batch jobs efficiently by automatically provisioning compute resources and scheduling workloads.
+Steps:
+Go to AWS Batch
+Create compute environment
+Define job queue
+Create job definition
+Submit and monitor job
+
+8. AWS CodePipeline
+CodePipeline automates CI/CD pipelines for building, testing, and deploying applications.
+Steps:
+Open CodePipeline → Create pipeline
+Connect source (GitHub/CodeCommit)
+Add build stage (CodeBuild)
+Add deploy stage
+Run pipeline
+
+9. AWS CodeBuild
+CodeBuild compiles code, runs tests, and generates artifacts without managing servers.
+Steps:
+Go to CodeBuild → Create project
+Connect source repository
+Define buildspec file
+Start build
+View logs and artifacts
+
+10. AWS CodeDeploy
+CodeDeploy automates application deployment across EC2, Lambda, and servers with minimal downtime.
+Steps:
+Open CodeDeploy → Create application
+Define deployment group
+Configure deployment strategy
+Upload application revision
+Start deployment and monitor

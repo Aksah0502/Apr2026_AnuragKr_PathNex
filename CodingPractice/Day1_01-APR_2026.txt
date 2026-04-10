@@ -1,0 +1,13 @@
+No code today, as it was Introduction roadmap to DevOps.
+
+DevOps is a set of practices that integrates software development (Dev) and IT operations (Ops) to enable faster, more reliable software delivery. It focuses on automation, collaboration, continuous integration, continuous delivery (CI/CD), and monitoring throughout the software lifecycle.
+
+Common DevOps Tools
+Linux – Core OS for servers and DevOps environments.
+Git – Distributed version control for tracking code changes.
+Jenkins – CI/CD tool for automating build and deployment pipelines.
+Docker – Packages applications into portable containers.
+Kubernetes – Manages and scales containerized applications.
+Amazon Web Services (AWS) – Provides scalable cloud infrastructure and services.
+Ansible – Configuration management and automation tool.
+Terraform – Automates infrastructure provisioning.

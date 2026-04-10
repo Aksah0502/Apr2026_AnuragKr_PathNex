@@ -1,0 +1,17 @@
+Tasks I did Today:
+
+1. 3Hr Introduction to Azure.
+2. 2Hr DSA
+3. 1hr Practice AWS
+4. 2Hr Interview Speaking Practice.
+5. 1Hr Cloud Computing
+
+
+
+
+Tasks that I will do tomorrow:
+
+1. 3Hr Backend Using Node.js + DSA.
+2. 2Hr AWS Practice.
+3. 2Hr Interview Speaking Practice.
+4. 1Hr Cloud Computing.

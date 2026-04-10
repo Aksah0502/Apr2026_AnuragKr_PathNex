@@ -1,0 +1,55 @@
+Introduction to Linux
+
+Linux is an open-source, Unix-like operating system widely used in servers, cloud environments, and DevOps workflows. It provides a powerful command-line interface (CLI) that allows users to manage files, processes, and systems efficiently.
+
+Common Linux Commands (Syntax + Examples)
+1. ls (List directory contents)
+Syntax: ls [options] [directory]
+Examples:
+ls → Lists files in current directory
+ls -a → Shows hidden files
+ls -l → Detailed list (permissions, size, date)
+ls -la → Combined detailed + hidden files
+2. pwd (Print working directory)
+Syntax: pwd
+Example:
+pwd → /home/user/projects
+3. cd (Change directory)
+Syntax: cd [directory]
+Examples:
+cd /home/user → Go to specific directory
+cd .. → Move one level up
+cd ~ → Go to home directory
+4. mkdir (Create directory)
+Syntax: mkdir [options] directory_name
+Examples:
+mkdir test → Creates folder
+mkdir -p a/b/c → Creates nested directories
+5. touch (Create empty file)
+Syntax: touch filename
+Example:
+touch file.txt
+6. vim (Text editor)
+Syntax: vim filename
+Example:
+vim file.txt → Opens file in Vim editor
+7. nano (Simple text editor)
+Syntax: nano filename
+Example:
+nano file.txt → Opens file in Nano editor
+8. cat (Display file content)
+Syntax: cat filename
+Examples:
+cat file.txt → Displays content
+cat file1 file2 → Combines files
+9. head (Show beginning of file)
+Syntax: head [options] filename
+Examples:
+head file.txt → First 10 lines
+head -n 5 file.txt → First 5 lines
+10. tail (Show end of file)
+Syntax: tail [options] filename
+Examples:
+tail file.txt → Last 10 lines
+tail -n 5 file.txt → Last 5 lines
+tail -f file.txt → Live file updates (useful for logs)

@@ -1,0 +1,112 @@
+System Information Commands in Linux
+1. uname (System information)
+Syntax: uname [options]
+Examples:
+uname → Kernel name
+uname -a → All system info
+uname -r → Kernel version
+
+2. whoami (Current user)
+Syntax: whoami
+Example:
+Output: ak
+
+3. df (Disk filesystem usage)
+Syntax: df [options]
+Examples:
+df → Disk usage
+df -h → Human-readable (GB/MB)
+
+4. du (Directory usage)
+Syntax: du [options] [path]
+Examples:
+du -h → Human-readable sizes
+du -sh folder/ → Total size of folder
+
+5. free (Memory usage)
+Syntax: free [options]
+Example:
+free -h → RAM usage in readable format
+
+6. uptime (System running time)
+Syntax: uptime
+Example:
+Shows uptime + load average
+
+7. lscpu (CPU details)
+Syntax: lscpu [options]
+Examples:
+lscpu → CPU architecture info
+lscpu -a → Show online/offline CPUs
+
+Networking Commands
+
+1. ping (Check connectivity)
+Syntax: ping [options] host
+Examples:
+ping google.com
+ping -c 4 google.com
+
+2. netstat (Network statistics)
+Syntax: netstat [options]
+Examples:
+netstat -tuln
+netstat -an
+
+3. ss (Socket statistics – modern alternative to netstat)
+Syntax: ss [options]
+Examples:
+ss -tuln
+ss -s
+
+4. ssh (Remote login)
+Syntax: ssh user@host
+Example:
+ssh user@192.168.1.10
+
+5. scp (Secure file copy)
+Syntax: scp source destination
+Examples:
+scp file.txt user@host:/home/user/
+scp user@host:file.txt .
+
+6. wget (Download files)
+Syntax: wget URL
+Example:
+wget https://example.com/file.zip
+
+7. curl (Transfer data via URL)
+Syntax: curl [options] URL
+Examples:
+curl https://example.com
+curl -O https://example.com/file.zip
+
+I/O Redirection Commands
+1. Output Redirection (>, >>)
+Syntax:
+command > file      # overwrite
+command >> file     # append
+Examples:
+ls > files.txt
+echo "Hello" >> file.txt
+
+2. Input Redirection (<)
+Syntax:
+command < file
+Example:
+wc -l < file.txt
+
+3. Pipe (|)
+Use: Pass output of one command to another
+Example:
+ls | grep ".txt"
+
+4. Error Redirection (2>)
+Syntax:
+command 2> error.log
+Example:
+ls invalidfile 2> error.txt
+
+5. Combine Output & Error (&>)
+Example:
+command &> output.log

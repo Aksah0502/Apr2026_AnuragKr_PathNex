@@ -1,0 +1,69 @@
+What is sudo in Linux?
+
+sudo (SuperUser DO) allows a permitted user to execute commands with elevated (root/administrator) privileges.
+
+Why it is helpful
+Security: Avoids logging in as root directly
+Controlled access: Only authorized users can run admin commands
+Auditability: Tracks command usage in logs
+Granular permissions: Specific commands can be allowed/denied
+
+Syntax:
+sudo command
+Example:
+sudo apt update
+
+Important Linux Commands
+
+1. chmod (Change file permissions)
+Syntax: chmod [options] permissions filename
+Examples:
+chmod 755 script.sh
+chmod +x file.sh
+
+2. chown (Change file owner)
+Syntax: chown owner:group filename
+Example:
+chown user1:filegroup file.txt
+
+3. chgrp (Change group ownership)
+Syntax: chgrp group_name filename
+Example:
+chgrp developers file.txt
+
+4. umask (Default permission settings)
+Syntax: umask [value]
+Example:
+umask 022
+→ Sets default permissions for new files/directories
+
+5. tar (Archive files)
+Syntax: tar [options] archive_name files
+Examples:
+tar -cvf archive.tar file1 file2
+tar -xvf archive.tar
+
+6. gzip (Compress files)
+Syntax: gzip filename
+Example:
+gzip file.txt
+→ Creates file.txt.gz
+
+7. zip (Compress multiple files)
+Syntax: zip archive.zip files
+Example:
+zip files.zip file1 file2
+
+8. grep (Search text patterns)
+Uses: Search for specific text inside files
+Syntax: grep [options] pattern filename
+Examples:
+grep "error" file.txt
+grep -i "hello" file.txt   # case-insensitive
+grep -r "main" .          # search recursively
+
+Summary
+These commands are critical for:
+Permission management (chmod, chown, chgrp, umask)
+File compression & archiving (tar, gzip, zip)
+Text processing (grep)

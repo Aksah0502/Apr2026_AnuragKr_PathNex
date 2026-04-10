@@ -1,0 +1,16 @@
+Introduction to Microsoft Azure
+
+Microsoft Azure is a cloud computing platform that provides services for computing, storage, networking, databases, analytics, and DevOps. Similar to AWS, it follows a pay-as-you-go model and supports building, deploying, and managing applications through Microsoft-managed data centers worldwide. Azure integrates deeply with Microsoft tools like Windows Server, Active Directory, and .NET, making it popular in enterprise environments.
+
+Azure vs AWS – Equivalent Services (10 Examples)
+Azure Service	                         AWS Equivalent	        Difference in Use
+Azure Virtual Machines	                    EC2	                Similar compute service; Azure integrates better with Windows environments
+Azure Blob Storage	                         S3	                Both object storage; Azure offers tighter integration with Microsoft services
+Azure Virtual Network (VNet)	            VPC              	Similar networking; Azure uses simpler subnet configuration
+Azure Active Directory (Azure AD)	        IAM             	Azure AD focuses more on identity + enterprise SSO, IAM is resource-centric
+Azure Functions	                           Lambda	            Both serverless; Azure integrates well with Microsoft ecosystem
+Azure Monitor	                          CloudWatch	        Azure Monitor has deeper integration with enterprise monitoring tools
+Azure SQL Database	                        RDS	                Fully managed DB; Azure optimized for SQL Server workloads
+Azure Cosmos DB	                          DynamoDB	            Cosmos DB supports multiple APIs (MongoDB, Cassandra), more flexible
+Azure DevOps	        CodePipeline / CodeBuild / CodeDeploy	Azure DevOps is an all-in-one suite; AWS uses separate services
+Azure Site Recovery	         AWS Backup / Disaster Recovery  	Azure provides strong built-in disaster recovery for hybrid setups.

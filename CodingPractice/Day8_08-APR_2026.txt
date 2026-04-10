@@ -1,0 +1,73 @@
+1. S3 (Simple Storage Service)
+Amazon S3 is an object storage service used to store and retrieve any amount of data from anywhere. 
+It is highly durable, scalable, and secure, making it ideal for backups, static website hosting, log storage, and data lakes. 
+Data is stored in buckets and accessed via unique object keys. It supports versioning, lifecycle policies, and encryption for data protection.
+S3 integrates with many AWS services and is commonly used in DevOps pipelines for artifact storage and deployment assets.
+Steps:
+Go to S3 → Create Bucket
+Enter bucket name (globally unique)
+Select region
+Configure settings (versioning, permissions)
+Upload files
+Access via URL or API
+
+2. Session Manager (AWS Systems Manager)
+Session Manager allows secure remote access to EC2 instances without using SSH keys or opening ports. 
+It works through the AWS Systems Manager service and enhances security by eliminating direct inbound access. 
+It provides audit logs, access control via IAM, and works directly from the AWS console or CLI. 
+It is widely used in secure environments where SSH access is restricted and helps in managing instances efficiently without exposing them to the internet.
+Steps:
+Ensure EC2 has IAM role with SSM permissions
+Install/enable SSM Agent (usually pre-installed)
+Go to Systems Manager → Session Manager
+Select instance → Start Session
+Access terminal directly in browser
+
+3. CloudTrail
+CloudTrail records all API activity and user actions across AWS accounts. It is essential for auditing, security analysis, and compliance. 
+Every action (like creating EC2, deleting S3 bucket) is logged with details such as user identity, time, and IP address. 
+Logs can be stored in S3 for long-term analysis. It helps detect unauthorized access and troubleshoot operational issues by providing a complete history of events in the AWS environment.
+Steps:
+Go to CloudTrail → Create Trail
+Enter trail name
+Choose storage location (S3 bucket)
+Enable logging for all regions
+Review and create
+View logs in S3 or CloudTrail dashboard
+
+4. CloudWatch
+CloudWatch is a monitoring and observability service for AWS resources and applications. 
+It collects metrics, logs, and events, enabling real-time monitoring of performance and health. 
+You can create dashboards, set alarms (e.g., high CPU usage), and trigger automated actions. 
+It integrates with EC2, Lambda, and other services, making it essential for maintaining system reliability and performance in production environments.
+Steps:
+Go to CloudWatch Dashboard
+View metrics (e.g., EC2 CPU usage)
+Create alarm → Set threshold
+Configure notification (SNS)
+Monitor logs and events
+
+5. Lambda
+AWS Lambda is a serverless compute service that runs code without provisioning servers. 
+You upload code, and Lambda executes it in response to events (e.g., file upload to S3, API calls). 
+It automatically scales based on demand and charges only for execution time. 
+It supports multiple programming languages and is widely used for automation, backend APIs, and event-driven architectures.
+Steps:
+Go to Lambda → Create Function
+Choose runtime (Python, Node.js, etc.)
+Write/upload code
+Configure trigger (e.g., S3 event)
+Deploy and test function
+
+6. Auto Scaling
+Auto Scaling automatically adjusts the number of EC2 instances based on traffic or demand. 
+It ensures high availability and cost efficiency by scaling out during high load and scaling in during low usage. 
+It works with load balancers and CloudWatch alarms to maintain performance. 
+This is critical for applications with variable traffic patterns.
+Steps:
+Go to EC2 → Auto Scaling Groups
+Create launch template (AMI, instance type)
+Define scaling group (min, max, desired capacity)
+Configure scaling policies (CPU-based, etc.)
+Attach load balancer (optional)
+Monitor scaling activity

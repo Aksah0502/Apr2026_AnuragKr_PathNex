@@ -1,0 +1,62 @@
+Cloud computing provides on-demand access to computing resources (servers, storage, networking) over the internet.
+
+Key Benefits
+Scalability: Instantly scale resources up/down based on demand
+Cost Efficiency: Pay-as-you-go model (no upfront hardware cost)
+High Availability: Built-in redundancy and global infrastructure
+Flexibility: Access services from anywhere
+Automation: Easily integrate with DevOps pipelines
+
+Introduction to Amazon Web Services (AWS):
+AWS is a leading cloud platform offering 200+ services including compute, storage, networking, and security.
+It allows developers and organizations to build and deploy applications without managing physical infrastructure.
+
+Services: 
+1. EC2 (Elastic Compute Cloud)
+EC2 provides resizable virtual servers (instances) in the cloud to run applications. 
+It eliminates the need for physical hardware and supports multiple operating systems like Linux and Windows.
+EC2 is widely used for hosting web applications, running backend services, testing environments, and batch processing. 
+It offers flexibility in instance types (CPU, memory optimized), auto scaling for handling variable loads, and integration with other AWS services. 
+Security is managed using key pairs and security groups (firewall rules). 
+It is a fundamental compute service in AWS and forms the backbone of most cloud-based architectures.
+Steps:
+Open AWS Console → EC2 → Launch Instance
+Select AMI (e.g., Ubuntu)
+Choose instance type (t2.micro)
+Configure network (VPC, subnet)
+Add storage
+Configure security group (allow SSH/HTTP)
+Create/download key pair
+Launch and connect using SSH
+
+2. IAM (Identity and Access Management):
+IAM enables secure management of access to AWS resources. 
+It allows you to create users, groups, and roles, each with specific permissions defined by policies. 
+Instead of sharing root credentials, IAM enforces least-privilege access, ensuring users only get permissions they need. 
+It supports multi-factor authentication (MFA) for enhanced security and integrates with all AWS services. 
+IAM roles are especially useful for granting temporary access to services like EC2 without exposing credentials. 
+It is critical for governance, compliance, and security in cloud environments, making it one of the most important AWS services in DevOps and enterprise setups.
+Steps:
+Go to IAM Dashboard
+Click Users → Add User
+Set access type (console/programmatic)
+Attach policies (e.g., ReadOnly, Admin)
+Review and create user
+Save credentials securely
+(Optional) Enable MFA
+
+3. VPC (Virtual Private Cloud):
+VPC allows you to create a logically isolated network within AWS where you can launch resources securely. 
+It gives full control over IP addressing, subnets, routing, and gateways. 
+You can design public and private subnets, enabling secure architectures (e.g., web servers in public subnet, databases in private subnet).
+VPC supports internet gateways for external access and NAT gateways for outbound traffic from private networks. 
+Security is enforced using network ACLs and security groups.
+It is essential for building production-grade cloud systems with proper network segmentation, isolation, and controlled communication between services.
+Steps:
+Go to VPC Dashboard → Create VPC
+Define CIDR block (e.g., 10.0.0.0/16)
+Create subnets (public/private)
+Attach Internet Gateway
+Configure Route Tables
+Set up security groups
+Launch EC2 within the VPC
