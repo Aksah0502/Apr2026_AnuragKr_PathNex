@@ -1,0 +1,124 @@
+# ----------------------------------------
+# Namespace
+# ----------------------------------------
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: prod-app
+
+---
+# ----------------------------------------
+# ConfigMap (non-sensitive config)
+# ----------------------------------------
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: prod-app
+data:
+  APP_ENV: "production"
+  APP_PORT: "8080"
+  LOG_LEVEL: "info"
+
+---
+# ----------------------------------------
+# Secret (sensitive values)
+# NOTE: base64 encoded (not encrypted)
+# ----------------------------------------
+apiVersion: v1
+kind: Secret
+metadata:
+  name: app-secret
+  namespace: prod-app
+type: Opaque
+data:
+  DB_HOST: ZGIucHJvZC5sb2NhbA==      # db.prod.local
+  DB_USER: YWRtaW4=                 # admin
+  DB_PASSWORD: c3VwZXJzZWNyZXQ=     # supersecret
+
+---
+# ----------------------------------------
+# Deployment (production-leaning)
+# ----------------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  namespace: prod-app
+spec:
+  replicas: 3
+
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+
+  selector:
+    matchLabels:
+      app: prod-app
+
+  template:
+    metadata:
+      labels:
+        app: prod-app
+    spec:
+      containers:
+        - name: app-container
+          image: nginx:stable
+          ports:
+            - containerPort: 8080
+
+          # -------------------------------
+          # Environment Variables
+          # -------------------------------
+          envFrom:
+            - configMapRef:
+                name: app-config
+            - secretRef:
+                name: app-secret
+
+          # -------------------------------
+          # Resource Limits (important)
+          # -------------------------------
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "250m"
+              memory: "256Mi"
+
+          # -------------------------------
+          # Health Checks
+          # -------------------------------
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 20
+
+---
+# ----------------------------------------
+# Service (internal exposure)
+# ----------------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-service
+  namespace: prod-app
+spec:
+  type: ClusterIP
+  selector:
+    app: prod-app
+  ports:
+    - port: 80
+      targetPort: 8080
