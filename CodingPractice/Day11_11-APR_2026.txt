@@ -1,0 +1,33 @@
+docker_overview:
+  definition: Docker is a tool that packages applications with all dependencies into containers so they run consistently on any system.
+  why_used: Ensures consistency, simplifies deployment, improves scalability, and reduces environment-related issues.
+
+images_vs_containers:
+  image:
+    description: Read-only blueprint containing application code, libraries, and dependencies.
+  container:
+    description: Running instance of an image with its own isolated environment.
+  difference: Image is static (template), container is dynamic (execution).
+
+dockerfile_basics:
+  purpose: Used to create custom Docker images using a set of instructions.
+  common_instructions:
+    - FROM: Base image
+    - WORKDIR: Set working directory
+    - COPY: Copy files into image
+    - RUN: Execute commands during build
+    - CMD: Default command when container starts
+
+essential_commands:
+  - docker build -t myapp .
+  - docker run -p 8080:8080 myapp
+  - docker ps
+  - docker stop <container_id>
+  - docker rm <container_id>
+  - docker images
+
+volumes_and_networking:
+  volumes:
+    description: Persistent storage that keeps data even if container is deleted.
+  networking:
+    description: Allows containers to communicate with each other using Docker networks.
