@@ -1,0 +1,15 @@
+Tasks I did Today:
+
+1. 3Hr Introduction to Kubernetes - 2.
+2. 1hr Practice AWS
+3. 1Hr LLM
+4. 1Hr Cloud Computing
+5. 2Hr Interview Speaking Practice.
+
+
+
+Tasks that I will do tomorrow:
+
+1. 2Hr LLM + Cloud Computing.
+2. 2Hr AWS Practice.
+3. 2Hr Interview Speaking Practice.
