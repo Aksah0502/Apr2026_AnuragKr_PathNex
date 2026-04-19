@@ -1,0 +1,87 @@
+# ----------------------------------------
+# Namespace
+# ----------------------------------------
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: practice
+
+---
+# ----------------------------------------
+# Pod (basic standalone pod)
+# ----------------------------------------
+apiVersion: v1
+kind: Pod
+metadata:
+  name: simple-pod
+  namespace: practice
+  labels:
+    app: demo-pod
+spec:
+  containers:
+    - name: nginx-container
+      image: nginx:latest
+      ports:
+        - containerPort: 80
+
+---
+# ----------------------------------------
+# Deployment (manages multiple pods)
+# ----------------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-deployment
+  namespace: practice
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: web-app
+  template:
+    metadata:
+      labels:
+        app: web-app
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+
+---
+# ----------------------------------------
+# Service (exposes Deployment)
+# ----------------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-service
+  namespace: practice
+spec:
+  type: ClusterIP
+  selector:
+    app: web-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+
+---
+# ----------------------------------------
+# NodePort Service (external access)
+# ----------------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-nodeport
+  namespace: practice
+spec:
+  type: NodePort
+  selector:
+    app: web-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30007
