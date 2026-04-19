@@ -1,0 +1,16 @@
+Tasks I did Today:
+
+1. 3Hr Introduction to Docker.
+2. 1hr Practice AWS
+3. 2Hr Interview Speaking Practice.
+
+
+
+
+
+Tasks that I will do tomorrow:
+
+1. 3Hr Backend Using Node.js + DSA.
+2. 2Hr AWS Practice.
+3. 2Hr Interview Speaking Practice.
+4. 1Hr LLM.
