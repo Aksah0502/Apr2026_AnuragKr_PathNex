@@ -1,0 +1,130 @@
+# ----------------------------------------
+# Namespace
+# ----------------------------------------
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: production
+
+---
+# ----------------------------------------
+# ConfigMap (non-sensitive configuration)
+# ----------------------------------------
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: production
+data:
+  APP_ENV: "production"
+  LOG_LEVEL: "info"
+  APP_PORT: "80"
+
+---
+# ----------------------------------------
+# Secret (sensitive data - base64 encoded)
+# ----------------------------------------
+apiVersion: v1
+kind: Secret
+metadata:
+  name: app-secret
+  namespace: production
+type: Opaque
+data:
+  DB_USERNAME: YWRtaW4=        # "admin"
+  DB_PASSWORD: cGFzc3dvcmQ=    # "password"
+
+---
+# ----------------------------------------
+# Deployment (uses ConfigMap + Secret)
+# ----------------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  namespace: production
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: production-app
+  template:
+    metadata:
+      labels:
+        app: production-app
+    spec:
+      containers:
+        - name: app-container
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+
+          env:
+            # From ConfigMap
+            - name: APP_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: APP_ENV
+
+            - name: LOG_LEVEL
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: LOG_LEVEL
+
+            # From Secret
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: DB_USERNAME
+
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: DB_PASSWORD
+
+---
+# ----------------------------------------
+# Service (internal exposure)
+# ----------------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-service
+  namespace: production
+spec:
+  type: ClusterIP
+  selector:
+    app: production-app
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+
+---
+# ----------------------------------------
+# Ingress (external routing)
+# ----------------------------------------
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app-ingress
+  namespace: production
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: myapp.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: app-service
+                port:
+                  number: 80
