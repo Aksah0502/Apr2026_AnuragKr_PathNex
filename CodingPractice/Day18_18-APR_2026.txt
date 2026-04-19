@@ -1,0 +1,241 @@
+kubernetes_troubleshooting:
+
+  command_toolkit:
+    description: Common kubectl commands used during debugging
+
+    cluster_inspection:
+      - kubectl get pods -A
+      - kubectl get nodes
+      - kubectl get events -A --sort-by=.lastTimestamp
+
+    pod_debugging:
+      - kubectl describe pod <pod> -n <namespace>
+      - kubectl logs <pod> -n <namespace>
+      - kubectl logs <pod> -n <namespace> --previous
+
+    workload_management:
+      - kubectl rollout restart deployment <name>
+      - kubectl scale deployment <name> --replicas=3
+
+    networking_checks:
+      - kubectl get svc -n <namespace>
+      - kubectl get endpoints -n <namespace>
+      - kubectl get ingress -n <namespace>
+
+    node_debugging:
+      - kubectl describe node <node>
+      - kubectl top nodes
+      - kubectl top pods -n <namespace>
+
+    advanced_debug:
+      - kubectl exec -it <pod> -- sh
+      - kubectl port-forward svc/<service> 8080:80
+      - kubectl run debug --rm -it --image=busybox -- sh
+
+  scenarios:
+
+    - name: Pod Pending (Scheduling Failure)
+
+      theory:
+        explanation: >
+          A pod remains in Pending state when the Kubernetes scheduler
+          cannot find a suitable node to place it on.
+        common_causes:
+          - Insufficient CPU or memory
+          - Node selector or affinity mismatch
+          - Taints without matching tolerations
+
+      symptoms:
+        - Pod stuck in Pending
+        - No container created
+
+      commands_used:
+        - kubectl get pods -n <namespace>
+        - kubectl describe pod <pod> -n <namespace>
+
+      diagnosis_clues:
+        - "0/3 nodes available"
+        - "Insufficient cpu"
+        - "node(s) had taint"
+
+      solution:
+        steps:
+          - Reduce resource requests in Deployment
+          - Add tolerations if nodes are tainted
+          - Fix nodeSelector or affinity rules
+
+    - name: CrashLoopBackOff (Application Crash)
+
+      theory:
+        explanation: >
+          The container starts but repeatedly crashes. Kubernetes restarts it,
+          leading to exponential backoff.
+        common_causes:
+          - Application error
+          - Missing environment variables
+          - Dependency unavailable (DB/API)
+
+      symptoms:
+        - Pod status shows CrashLoopBackOff
+        - Restart count increasing
+
+      commands_used:
+        - kubectl logs <pod> -n <namespace>
+        - kubectl logs <pod> -n <namespace> --previous
+        - kubectl describe pod <pod> -n <namespace>
+
+      diagnosis_clues:
+        - Application error stack trace
+        - Exit code != 0
+
+      solution:
+        steps:
+          - Fix application configuration
+          - Verify environment variables (ConfigMap/Secret)
+          - Ensure dependencies are reachable
+
+    - name: ImagePullBackOff (Image Issues)
+
+      theory:
+        explanation: >
+          Kubernetes cannot pull the container image from the registry.
+        common_causes:
+          - Incorrect image name or tag
+          - Private registry without credentials
+          - Network/DNS issue
+
+      symptoms:
+        - Pod stuck in ImagePullBackOff
+
+      commands_used:
+        - kubectl describe pod <pod> -n <namespace>
+
+      diagnosis_clues:
+        - ErrImagePull
+        - unauthorized
+
+      solution:
+        steps:
+          - Fix image name or tag
+          - Configure imagePullSecrets
+          - Verify registry access
+
+    - name: Service Not Routing Traffic
+
+      theory:
+        explanation: >
+          Services route traffic to pods using label selectors.
+          If labels do not match, traffic will not reach pods.
+        key_concept:
+          - Service → Endpoints → Pods chain
+
+      symptoms:
+        - Service exists but no response
+        - Application unreachable internally
+
+      commands_used:
+        - kubectl get svc -n <namespace>
+        - kubectl get endpoints -n <namespace>
+
+      diagnosis_clues:
+        - Endpoints list is empty
+
+      solution:
+        steps:
+          - Ensure Deployment labels match Service selector
+          - Redeploy pods if labels were changed
+
+    - name: Ingress Not Working
+
+      theory:
+        explanation: >
+          Ingress requires a controller to route external traffic into the cluster.
+        common_causes:
+          - No ingress controller installed
+          - DNS not pointing to LoadBalancer
+          - Wrong ingressClassName
+
+      symptoms:
+        - Domain not resolving
+        - 404 or timeout
+
+      commands_used:
+        - kubectl get ingress -n <namespace>
+        - kubectl describe ingress <name> -n <namespace>
+
+      diagnosis_clues:
+        - No external IP
+        - Rules not applied
+
+      solution:
+        steps:
+          - Install ingress controller (NGINX or ALB)
+          - Fix annotations and ingressClassName
+          - Update DNS records
+
+    - name: Probe Failures (Liveness/Readiness)
+
+      theory:
+        explanation: >
+          Probes determine container health. If misconfigured,
+          Kubernetes may restart healthy containers or block traffic.
+        types:
+          - Liveness: restarts container
+          - Readiness: controls traffic routing
+
+      symptoms:
+        - Frequent restarts
+        - Pod not receiving traffic
+
+      commands_used:
+        - kubectl describe pod <pod> -n <namespace>
+
+      diagnosis_clues:
+        - "Readiness probe failed"
+        - "Liveness probe failed"
+
+      solution:
+        steps:
+          - Fix health check endpoint path
+          - Increase initialDelaySeconds
+          - Ensure correct port configuration
+
+    - name: Config Not Updating
+
+      theory:
+        explanation: >
+          ConfigMaps and Secrets do not automatically restart pods when updated.
+        key_concept:
+          - Pods must be restarted to pick up new config
+
+      symptoms:
+        - Application still using old config
+
+      commands_used:
+        - kubectl get configmap -n <namespace>
+        - kubectl rollout restart deployment <name>
+
+      solution:
+        steps:
+          - Restart deployment
+          - Consider using checksum annotation for auto-rollout
+
+    - name: DNS Resolution Failure
+
+      theory:
+        explanation: >
+          Kubernetes uses CoreDNS for internal service discovery.
+        dependency:
+          - CoreDNS must be running
+
+      symptoms:
+        - Service names not resolving
+
+      commands_used:
+        - kubectl exec -it <pod> -- nslookup kubernetes.default
+        - kubectl get pods -n kube-system
+
+      solution:
+        steps:
+          - Restart CoreDNS pods
+          - Check cluster DNS configuration
