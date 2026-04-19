@@ -1,0 +1,67 @@
+eks_access_flow:
+  overview:
+    description: >
+      Represents how a user securely accesses an AWS EKS cluster via a bastion host,
+      and how the control plane interacts with worker nodes.
+
+  components:
+
+    laptop:
+      role: User machine
+      responsibility:
+        - Initiates SSH connection
+        - Runs kubectl commands
+      connects_to: bastion_host
+
+    bastion_host:
+      role: Secure jump server
+      responsibility:
+        - Acts as entry point to private infrastructure
+        - Forwards traffic to EKS cluster
+      access_method: SSH
+      connects_to: eks_control_plane
+
+    eks_control_plane:
+      role: Managed Kubernetes control layer
+      managed_by: AWS
+      components:
+
+        api_server:
+          role: Entry point for all cluster communication
+          responsibility:
+            - Handles kubectl requests
+            - Validates and processes API calls
+
+        etcd:
+          role: Key-value store
+          responsibility:
+            - Stores cluster state and configuration
+
+        scheduler:
+          role: Pod placement engine
+          responsibility:
+            - Assigns pods to worker nodes
+
+        controller_manager:
+          role: Maintains desired state
+          responsibility:
+            - Ensures deployments, replicas, and nodes are in correct state
+
+        cloud_controller_manager:
+          role: Cloud integration layer
+          responsibility:
+            - Manages AWS resources (load balancers, volumes, etc.)
+
+      connects_to: worker_nodes
+
+    worker_nodes:
+      description: Machines where application workloads run
+      nodes:
+        - name: worker_node_1
+        - name: worker_node_2
+        - name: worker_node_3
+
+      responsibilities:
+        - Run pods/containers
+        - Communicate with control plane
+        - Execute scheduled workloads
