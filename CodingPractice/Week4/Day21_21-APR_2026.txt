@@ -1,0 +1,88 @@
+terraform:
+
+  overview:
+    purpose: Infrastructure as Code tool
+    workflow:
+      - init
+      - plan
+      - apply
+      - destroy
+
+  core:
+
+    providers:
+      - aws
+      - azurerm
+      - google
+
+    resources:
+      example: aws_instance, aws_s3_bucket
+
+    state:
+      file: terraform.tfstate
+      role: tracks infra mapping
+
+  basic_config: |
+    provider "aws" {
+      region = "us-east-1"
+    }
+
+    resource "aws_instance" "web" {
+      ami           = "ami-123"
+      instance_type = "t2.micro"
+    }
+
+  commands:
+
+    - name: terraform init
+      purpose: initialize project and download providers
+      when_to_use:
+        - first time setup
+        - after adding provider/backend
+      notes:
+        - creates .terraform directory
+
+    - name: terraform validate
+      purpose: check syntax and configuration errors
+      when_to_use:
+        - before plan/apply
+
+    - name: terraform plan
+      purpose: preview changes (diff between state and config)
+      when_to_use:
+        - before apply
+      output:
+        - resources to add/change/destroy
+
+    - name: terraform apply
+      purpose: apply planned changes to infrastructure
+      behavior:
+        - creates/updates resources
+        - asks for confirmation (unless -auto-approve)
+
+    - name: terraform destroy
+      purpose: delete all managed infrastructure
+      warning:
+        - irreversible resource deletion
+
+  issues:
+
+    - name: init_failed
+      fix:
+        - check credentials
+        - verify provider config
+
+    - name: drift
+      fix:
+        - terraform refresh
+        - avoid manual changes
+
+    - name: apply_error
+      fix:
+        - check IAM permissions
+        - validate config
+
+  tips:
+    - always run plan before apply
+    - never commit state file
+    - use remote backend
