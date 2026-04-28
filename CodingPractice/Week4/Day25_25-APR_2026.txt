@@ -1,7 +1,7 @@
 devops_monitoring:
 
   overview:
-    purpose: observe system health, performance, and reliability
+    purpose: observe system health, performance, and reliability.
     pillars:
       - metrics
       - logs
