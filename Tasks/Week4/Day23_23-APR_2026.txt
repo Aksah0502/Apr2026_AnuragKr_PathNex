@@ -1,12 +1,7 @@
 Tasks I did Today:
 
-1. 3Hr Introduction to Ansible.
-2. 2Hr Cloud Computing
-3. 2Hr Interview Speaking Practice.
+Had Exam-------------------
 
 
 
-Tasks that I will do tomorrow:
 
-1. 4Hr Cloud Computing
-2. 2Hr Interview Speaking Practice.
