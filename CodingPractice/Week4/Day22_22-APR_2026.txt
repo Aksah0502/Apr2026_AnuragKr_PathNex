@@ -1,0 +1,91 @@
+terraform_kubernetes:
+
+  overview:
+    purpose: Manage Kubernetes infra + workloads using Terraform
+    flow:
+      - provision_cluster
+      - configure_access
+      - deploy_resources
+
+  providers:
+
+    aws_eks: |
+      resource "aws_eks_cluster" "main" {
+        name = "demo"
+      }
+
+    kubernetes: |
+      provider "kubernetes" {
+        host  = var.host
+        token = var.token
+      }
+
+    helm: |
+      provider "helm" {
+        kubernetes {
+          host  = var.host
+          token = var.token
+        }
+      }
+
+  resources:
+
+    namespace: |
+      resource "kubernetes_namespace" "dev" {
+        metadata { name = "dev" }
+      }
+
+    deployment: |
+      resource "kubernetes_deployment" "app" {
+        metadata { name = "nginx" }
+
+        spec {
+          replicas = 2
+          template {
+            spec {
+              container {
+                image = "nginx"
+                name  = "nginx"
+              }
+            }
+          }
+        }
+      }
+
+    helm_release: |
+      resource "helm_release" "nginx" {
+        name  = "nginx"
+        chart = "nginx"
+      }
+
+  commands:
+    terraform:
+      - terraform init
+      - terraform plan
+      - terraform apply
+
+    kubectl:
+      - kubectl get pods -A
+      - kubectl get svc -A
+
+  issues:
+
+    - name: auth_failure
+      fix:
+        - check token / kubeconfig
+        - verify cluster endpoint
+
+    - name: drift
+      fix:
+        - avoid manual kubectl changes
+        - run terraform apply
+
+    - name: cluster_not_ready
+      fix:
+        - add depends_on
+        - wait for nodes readiness
+
+  tips:
+    - separate infra and k8s modules
+    - use helm for complex apps
+    - use remote state

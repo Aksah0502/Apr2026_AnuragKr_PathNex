@@ -1,0 +1,89 @@
+ansible:
+
+  overview:
+    purpose: Configuration management and automation tool
+    architecture: agentless (uses SSH)
+    workflow:
+      - inventory
+      - playbook
+      - execute
+
+  core:
+
+    inventory:
+      description: list of target hosts
+      example: |
+        [web]
+        server1 ansible_host=192.168.1.10
+
+    playbook:
+      description: YAML file defining tasks
+      structure:
+        - hosts
+        - tasks
+
+    modules:
+      examples:
+        - apt
+        - yum
+        - copy
+        - service
+        - shell
+
+    variables:
+      types:
+        - host_vars
+        - group_vars
+        - extra_vars
+
+  basic_playbook: |
+    - name: Install nginx
+      hosts: web
+      become: yes
+
+      tasks:
+        - name: install package
+          apt:
+            name: nginx
+            state: present
+
+        - name: start service
+          service:
+            name: nginx
+            state: started
+
+  commands:
+
+    - name: ansible -i inventory all -m ping
+      purpose: check connectivity to hosts
+
+    - name: ansible-playbook playbook.yml
+      purpose: execute playbook
+
+    - name: ansible-inventory --list
+      purpose: view parsed inventory
+
+    - name: ansible all -m setup
+      purpose: gather system facts
+
+  issues:
+
+    - name: ssh_failure
+      fix:
+        - check SSH keys
+        - verify ansible_user
+
+    - name: permission_denied
+      fix:
+        - use become: yes
+        - verify sudo access
+
+    - name: module_failure
+      fix:
+        - check module syntax
+        - ensure dependencies installed
+
+  tips:
+    - use idempotent modules (avoid shell)
+    - organize with roles
+    - use variables instead of hardcoding

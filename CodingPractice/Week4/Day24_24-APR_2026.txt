@@ -1,0 +1,114 @@
+ci_cd:
+
+  overview:
+    purpose: automate build, test, and deployment pipelines
+    stages:
+      - source
+      - build
+      - test
+      - deploy
+      - monitor
+
+  tools:
+
+    ci:
+      examples:
+        - jenkins
+        - github_actions
+        - gitlab_ci
+
+    cd:
+      examples:
+        - argo_cd
+        - flux
+        - spinnaker
+
+    containerization:
+      - docker
+
+    orchestration:
+      - kubernetes
+
+  pipeline:
+
+    source_stage:
+      trigger:
+        - git push
+        - pull request
+
+    build_stage:
+      steps:
+        - install dependencies
+        - build artifact
+        - build docker image
+
+    test_stage:
+      types:
+        - unit_tests
+        - integration_tests
+
+    deploy_stage:
+      strategies:
+        - rolling
+        - blue_green
+        - canary
+
+  sample_pipeline_yaml: |
+    name: CI Pipeline
+
+    on: [push]
+
+    jobs:
+      build:
+        runs-on: ubuntu-latest
+
+        steps:
+          - uses: actions/checkout@v3
+
+          - name: build image
+            run: docker build -t app .
+
+          - name: run tests
+            run: npm test
+
+  commands:
+
+    git:
+      - git add .
+      - git commit -m "msg"
+      - git push
+
+    docker:
+      - docker build -t app .
+      - docker push repo/app
+
+    kubectl:
+      - kubectl apply -f deployment.yaml
+      - kubectl rollout status deployment/app
+
+  issues:
+
+    - name: build_failure
+      fix:
+        - check dependencies
+        - verify build script
+
+    - name: test_failure
+      fix:
+        - debug failing tests
+        - check environment config
+
+    - name: deploy_failure
+      fix:
+        - check kubeconfig
+        - verify image tag
+
+  best_practices:
+    - keep pipelines fast
+    - use caching
+    - separate CI and CD
+    - use secrets management
+
+  tips:
+    - automate everything
+    - monitor deployments

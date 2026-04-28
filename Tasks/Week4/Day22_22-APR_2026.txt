@@ -1,0 +1,12 @@
+Tasks I did Today:
+
+1. 2Hr Introduction to Terraform + Kubernetes.
+2. 2Hr Cloud Computing
+3. 2Hr Interview Speaking Practice.
+
+
+
+Tasks that I will do tomorrow:
+
+1. 3Hr Cloud Computing
+2. 2Hr Interview Speaking Practice.

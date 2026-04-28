@@ -1,0 +1,184 @@
+devops_monitoring:
+
+  overview:
+    purpose: observe system health, performance, and reliability
+    pillars:
+      - metrics
+      - logs
+      - traces
+    stack:
+      - prometheus
+      - grafana
+      - datadog
+
+  prometheus:
+
+    description: metrics collection + time-series database (pull-based)
+
+    architecture:
+      components:
+        - prometheus_server
+        - exporters
+        - alertmanager
+
+    workflow:
+      - scrape metrics from targets
+      - store time-series data
+      - query using promql
+      - trigger alerts
+
+    config_example: |
+      global:
+        scrape_interval: 15s
+
+      scrape_configs:
+        - job_name: "node"
+          static_configs:
+            - targets: ["localhost:9100"]
+
+    key_concepts:
+      metrics_types:
+        - counter
+        - gauge
+        - histogram
+        - summary
+
+      promql_examples:
+        - rate(http_requests_total[5m])
+        - up == 0
+
+    commands:
+      - prometheus --config.file=prometheus.yml
+
+    issues:
+
+      - name: target_down
+        clue: up == 0
+        fix:
+          - check exporter running
+          - verify target endpoint
+
+      - name: no_data
+        fix:
+          - check scrape_configs
+          - verify labels
+
+  grafana:
+
+    description: visualization and dashboarding tool
+
+    features:
+      - dashboards
+      - alerts
+      - multiple data sources
+
+    data_sources:
+      - prometheus
+      - datadog
+      - elasticsearch
+
+    dashboard_example:
+      panels:
+        - cpu_usage
+        - memory_usage
+        - request_rate
+
+    config_notes:
+      - add prometheus as datasource
+      - create panels using queries
+
+    commands:
+      - systemctl start grafana-server
+
+    issues:
+
+      - name: no_data_in_dashboard
+        fix:
+          - check datasource connection
+          - verify query
+
+      - name: dashboard_slow
+        fix:
+          - optimize queries
+          - reduce time range
+
+  datadog:
+
+    description: SaaS-based monitoring (metrics + logs + APM)
+
+    capabilities:
+      - infrastructure monitoring
+      - log management
+      - distributed tracing
+      - alerts
+
+    architecture:
+      agent_based: true
+
+    agent_install: |
+      DD_API_KEY=<key> bash -c "$(curl -L https://s3.amazonaws.com/dd-agent/scripts/install_script.sh)"
+
+    integrations:
+      - aws
+      - kubernetes
+      - docker
+      - nginx
+
+    dashboards:
+      - host_metrics
+      - container_metrics
+      - application_traces
+
+    alerts:
+      example:
+        - cpu > 80%
+        - error_rate > threshold
+
+    issues:
+
+      - name: agent_not_reporting
+        fix:
+          - check API key
+          - verify agent status
+
+      - name: missing_metrics
+        fix:
+          - enable integration
+          - check tags
+
+  comparison:
+
+    prometheus:
+      type: open_source
+      model: pull
+      storage: local_tsdb
+
+    grafana:
+      role: visualization_layer
+
+    datadog:
+      type: saas
+      model: push + agent
+      strength:
+        - all_in_one_platform
+
+  best_practices:
+    - define SLOs and SLIs
+    - alert on symptoms not causes
+    - use labels/tags properly
+    - avoid alert fatigue
+    - combine metrics + logs + traces
+
+  quick_checks:
+
+    prometheus:
+      - check /targets endpoint
+      - query up metric
+
+    grafana:
+      - test datasource
+      - refresh dashboard
+
+    datadog:
+      - agent status
+      - check metrics explorer
