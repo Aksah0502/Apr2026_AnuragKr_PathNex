@@ -1,7 +1,7 @@
-ci_cd:
+Ci_Cd:
 
   overview:
-    purpose: automate build, test, and deployment pipelines
+    purpose: automate build, test, and deployment pipelines.
     stages:
       - source
       - build
