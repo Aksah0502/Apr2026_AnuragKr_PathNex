@@ -2,7 +2,7 @@ ansible:
 
   overview:
     purpose: Configuration management and automation tool
-    architecture: agentless (uses SSH)
+    architecture: agentless [uses SSH]
     workflow:
       - inventory
       - playbook
