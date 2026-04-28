@@ -1,4 +1,4 @@
-terraform_kubernetes:
+terraform_Kubernetes:
 
   overview:
     purpose: Manage Kubernetes infra + workloads using Terraform
