@@ -1,0 +1,12 @@
+Tasks I did Today:
+
+1. 3Hr Introduction to SSL/TLS + SRE.
+2. 2Hr Docker Revision.
+3. 2Hr Interview Speaking Practice.
+
+
+
+Tasks that I will do tomorrow:
+
+1. 3Hr AWS Continue...
+2. 2Hr Interview Speaking Practice.
