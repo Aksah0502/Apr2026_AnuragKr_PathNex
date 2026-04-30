@@ -1,0 +1,12 @@
+Tasks I did Today:
+
+1. 3Hr Introduction to Security Tools Explained.
+2. 3Hr Docker Revision.
+3. 2Hr Interview Speaking Practice.
+
+
+
+Tasks that I will do tomorrow:
+
+1. 5Hr Kubernetes...
+2. 2Hr Interview Speaking Practice.
