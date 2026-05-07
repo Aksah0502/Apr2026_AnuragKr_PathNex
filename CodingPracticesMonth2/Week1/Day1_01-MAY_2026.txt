@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  app:
+    image: node:18
+    container_name: node_app
+    working_dir: /app
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/mydb
+    depends_on:
+      - mongo
+    command: npm start
+
+  mongo:
+    image: mongo:6
+    container_name: mongo_db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
+
+
+--------------------------------------------------------------------------------------
+
+# 1. Base image (runtime + OS)
+FROM node:18-alpine
+
+# 2. Working directory inside container
+WORKDIR /app
+
+# 3. Copy dependency files first (for caching)
+COPY package*.json ./
+
+# 4. Install dependencies
+RUN npm install
+
+# 5. Copy remaining source code
+COPY . .
+
+# 6. Expose app port
+EXPOSE 3000
+
+# 7. Start the app
+CMD ["npm", "start"]
+
+-------------------------------------------------------------------------------
+
+# 1. Use lightweight Java runtime
+FROM eclipse-temurin:17-jdk-alpine
+
+# 2. Set working directory
+WORKDIR /app
+
+# 3. Copy JAR file into container
+COPY target/app.jar app.jar
+
+# 4. Expose application port
+EXPOSE 8080
+
+# 5. Run the application
+CMD ["java", "-jar", "app.jar"]
