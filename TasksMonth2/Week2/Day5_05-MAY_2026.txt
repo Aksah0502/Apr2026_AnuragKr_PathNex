@@ -1,8 +1,8 @@
 Tasks I did today:
 
 1. 2Hr Coding Practice
-2. 3Hr AWS Revision
-3. 2Hr Evening Session about AWS 
+2. 3Hr AWS Revision + Docker
+3. 2Hr Evening Session about AWS + Docker
 
 Tasks that I would do tomorrow
 

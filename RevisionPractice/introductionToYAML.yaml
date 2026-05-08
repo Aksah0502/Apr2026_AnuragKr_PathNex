@@ -1,0 +1,56 @@
+# YAML (YAML Ain’t Markup Language) is a human-readable data serialization format
+# commonly used for configuration files and data exchange between systems. 
+# It emphasizes simplicity and clarity through indentation rather than brackets or tags. 
+# YAML represents data structures such as mappings (key-value pairs), sequences (lists), and scalars (strings, numbers, booleans). 
+# It is widely used in tools like Kubernetes, Docker Compose, and CI/CD pipelines. 
+# YAML supports comments, making it easy to document configurations. Its minimal syntax reduces complexity, but strict indentation rules must be followed carefully. 
+# Overall, YAML provides a clean, intuitive way to structure and manage data.
+
+--- # --- indicates the start of new block
+
+#String in YAML
+name : "AK"
+name : AK
+name : 'AK'
+
+#All three are correct syntax of string
+
+
+#Number in YAML 
+
+number : 15 # int
+num : 2.6 # Float
+booleanValue : No # n, N, false, False, FALSE, all works
+#Same for True, true, y, Yes, YES, TRUE
+
+# Manually Specify the types:
+
+number : !!int 0
+positive : !!int 5
+negative : !!int -10
+binarynum : !!int 0b011 #output : 3
+... #Indicates the end of a block
+
+---
+#Lists in YAML
+
+name : 
+  - "apple"
+  - "banana"
+  - "Orange"
+
+#OR
+
+name : ["apple", "banana", "Orange"]
+...
+
+---
+#Strings with multiple line and Multi-Line in YAML
+
+bio : |  #To use strings with mulitple line, use '|' , it preserve comma, full stop, spaces etc.
+ Hello!
+ I am Anurag Kumar.
+
+task : > # If we want a single line consist of multiple statements use '>'. It may happen that we want message in one single line.
+ I am learning DevOps.
+ It is a very exiting journey. I am following path under the guidance of neeraj bhai.

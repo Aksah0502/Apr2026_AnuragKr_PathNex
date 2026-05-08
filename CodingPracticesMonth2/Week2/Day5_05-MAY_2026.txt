@@ -47,8 +47,7 @@ echo "Hostname: $(hostname)"
 
 
 # Git Integration
-## 🔹 Jenkins Pipeline — Checkout Git
-You will learn how to **checkout a Git repository** and list files.
+## Jenkins Pipeline — Checkout Git
 
 pipeline {
     agent any
@@ -66,8 +65,7 @@ pipeline {
     }
 }
 
-## 🔹 GitLab CI — Checkout Git
-You will learn how to **checkout a Git repository in GitLab CI**.
+## GitLab CI — Checkout Git
 
 stages:
   - checkout
