@@ -77,7 +77,7 @@ pipeline {
         }
     }
 }
-🔹 GitLab CI/CD — Deploy to Kubernetes
+GitLab CI/CD — Deploy to Kubernetes
 stages:
   - deploy
 
