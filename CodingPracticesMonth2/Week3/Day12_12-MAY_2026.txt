@@ -1,0 +1,60 @@
+---
+- name: Install nginx
+  hosts: web
+  become: true
+
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Start nginx
+      service:
+        name: nginx
+        state: started
+        enabled: true
+
+
+
+---
+- name: Create deploy user
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Create user
+      user:
+        name: deploy
+        shell: /bin/bash
+        groups: sudo
+        append: yes
+
+    - name: Set authorized key
+      authorized_key:
+        user: deploy
+        state: present
+        key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+
+
+---
+- name: Install packages
+  hosts: all
+  become: true
+
+  vars:
+    packages:
+      - git
+      - curl
+      - vim
+      - htop
+
+  tasks:
+    - name: Install packages
+      apt:
+        name: "{{ packages }}"
+        state: present
