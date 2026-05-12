@@ -1,0 +1,10 @@
+Tasks I did today:
+
+1. 2Hr Coding Practice
+2. 4Hr Ansible Revision
+3. 2Hr Evening Session about Ansible
+
+Tasks that I would do tomorrow
+
+1. 2Hr Coding Practice
+2. 4Hr CI/CD
