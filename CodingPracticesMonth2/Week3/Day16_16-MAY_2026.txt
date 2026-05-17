@@ -1,0 +1,59 @@
+
+---
+# Stage 1 - Build frontend
+FROM node:20 AS builder
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
+RUN npm run build
+
+
+# Stage 2 - Serve using nginx
+FROM nginx:alpine
+
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
+
+...
+
+---
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: weather-chatbot-deployment
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: weather-chatbot
+
+  template:
+    metadata:
+      labels:
+        app: weather-chatbot
+
+    spec:
+      containers:
+      - name: weather-chatbot-container
+        image: weather-chatbot
+        imagePullPolicy: Never
+
+        ports:
+        - containerPort: 80
+...
+
+
+
+
