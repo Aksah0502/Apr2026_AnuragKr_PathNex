@@ -1,0 +1,10 @@
+Tasks I did today:
+
+1. 2Hr Coding Practice
+2. 4Hr Kafka + Security Tools
+3. 2Hr Evening Session about Ansible
+
+Tasks that I would do tomorrow
+
+1. 2Hr Coding Practice
+2. 4Hr Kubernetes
