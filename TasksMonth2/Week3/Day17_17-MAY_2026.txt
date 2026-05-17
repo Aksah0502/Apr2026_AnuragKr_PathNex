@@ -1,0 +1,9 @@
+Tasks I did today:
+
+1. 2Hr Coding Practice
+2. 4Hr Kubernetes Deployment
+
+Tasks that I would do tomorrow
+
+1. 2Hr Coding Practice
+2. 4Hr Kubernetes Deployment Continue + Linux
